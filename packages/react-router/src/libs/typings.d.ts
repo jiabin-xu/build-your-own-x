@@ -4,12 +4,12 @@ export interface Path {
   hash: string;
 }
 
-export interface Location<State = any> extends Path {
-  state: State;
+export interface Location extends Path {
+  state: any;
   key: string;
 }
 
-export type To = string | number;
+export type To = string | Partial<Path>;
 
 export interface Update {
   action: Action;

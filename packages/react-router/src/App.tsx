@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, useNavigate, useParams } from "./libs";
 
 export default function App() {
   return (
-    <BrowserRouter basename="/usage">
+    <BrowserRouter basename="/">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/article/:id" element={<Article />} />

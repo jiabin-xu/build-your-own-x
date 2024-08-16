@@ -9,7 +9,6 @@ export function createBrowserHistory() {
   function createBrowserLocation(
     window: Window,
     globalHistory: Window["history"]
-    // state: any,
   ) {
     const { pathname, search, hash } = window.location;
     return {
@@ -34,9 +33,10 @@ export function getUrlBasedHistory(
   let listener: Listener | null = null;
 
   function notify(event?: PopStateEvent) {
-    console.log("event :>> ", event);
-    listener &&
+    if (listener) {
+      console.log("event :>> ", event);
       listener({ action: "POP", location: history.location, delta: 0 });
+    }
   }
 
   const history = {
