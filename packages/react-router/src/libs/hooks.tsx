@@ -1,5 +1,5 @@
 import { useContext, useCallback, useMemo } from "react";
-import { LocationContext, NavigationContext } from "./contexts";
+import { LocationContext, NavigationContext, RouteContext } from "./contexts";
 import { NavigateOptions, RouteObject } from "./typings";
 import { matchRoutes, resolveTo } from "./utils";
 
@@ -30,7 +30,9 @@ export function useNavigate() {
 }
 
 export const useParams = () => {
-  return {} as any;
+  const { matches } = useContext(RouteContext);
+  const routeMatch = matches[matches.length - 1];
+  return routeMatch ? (routeMatch.params as any) : {};
 };
 
 export function useRoutes(routes: RouteObject[]) {
@@ -40,4 +42,8 @@ export function useRoutes(routes: RouteObject[]) {
     return matchRoutes(routes, location, basename);
   }, [location, basename, routes]);
   return matches;
+}
+
+export function useOutlet() {
+  return useContext(RouteContext).outlet;
 }

@@ -2,4 +2,4 @@
 
 - [x] Subscribing and manipulating the history stack
 - [x] Matching the URL to your routes
-- [ ] Rendering a nested UI from the route matches
+- [x] Rendering a nested UI from the route matches

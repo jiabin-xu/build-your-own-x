@@ -1,4 +1,11 @@
-import { BrowserRouter, Routes, Route, useNavigate, useParams } from "./libs";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useNavigate,
+  useParams,
+  Outlet,
+} from "./libs";
 
 export default function App() {
   return (
@@ -40,11 +47,17 @@ function Home() {
 
 function About() {
   const navigate = useNavigate();
-  return <h1 onClick={() => navigate(-1)}>About Us</h1>;
+  return (
+    <>
+      <h1 onClick={() => navigate(-1)}>About Us</h1>
+      <Outlet />
+    </>
+  );
 }
 
 function People() {
-  return <h1>People</h1>;
+  const { name } = useParams();
+  return <h1>People: {`${name}`}</h1>;
 }
 
 function Contact() {
