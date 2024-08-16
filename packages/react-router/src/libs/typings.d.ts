@@ -48,3 +48,12 @@ export interface NavigateOptions {
   unstable_flushSync?: boolean;
   unstable_viewTransition?: boolean;
 }
+
+interface RouteMatch<
+  ParamKey extends string = string,
+  RouteObjectType = RouteObject
+> {
+  params: Record<ParamKey, string>;
+  pathname: string;
+  route: RouteObjectType;
+}

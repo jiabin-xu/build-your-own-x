@@ -1,7 +1,7 @@
-import { useContext, useCallback } from "react";
+import { useContext, useCallback, useMemo } from "react";
 import { LocationContext, NavigationContext } from "./contexts";
-import { NavigateOptions } from "./typings";
-import { resolveTo } from "./utils";
+import { NavigateOptions, RouteObject } from "./typings";
+import { matchRoutes, resolveTo } from "./utils";
 
 export function useLocation(): Location {
   return useContext(LocationContext).location;
@@ -32,3 +32,12 @@ export function useNavigate() {
 export const useParams = () => {
   return {} as any;
 };
+
+export function useRoutes(routes: RouteObject[]) {
+  const location = useLocation();
+  const { basename } = useContext(NavigationContext);
+  const matches = useMemo(() => {
+    return matchRoutes(routes, location, basename);
+  }, [location, basename, routes]);
+  return matches;
+}

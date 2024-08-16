@@ -2,6 +2,8 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { createBrowserHistory } from "./history";
 import { Update } from "./typings";
 import { NavigationContext, LocationContext } from "./contexts";
+import { createRoutesFromChildren } from "./utils";
+import { useRoutes } from "./hooks";
 
 export const BrowserRouter = (props: {
   basename: string;
@@ -28,7 +30,7 @@ export const BrowserRouter = (props: {
     <NavigationContext.Provider
       value={{ basename, navigator: historyRef.current }}
     >
-      <LocationContext.Provider value={{ location: location }}>
+      <LocationContext.Provider value={{ location }}>
         {children}
       </LocationContext.Provider>
     </NavigationContext.Provider>
@@ -36,9 +38,18 @@ export const BrowserRouter = (props: {
 };
 
 export const Routes = (props: { children: React.ReactNode }) => {
-  return <div>{props.children}</div>;
+  const matches = useRoutes(createRoutesFromChildren(props.children));
+
+  if (matches.length === 0) {
+    return null;
+  }
+  return <div>{matches[matches.length - 1].route.element}</div>;
 };
 
-export const Route = (props: { path?: string; element: JSX.Element }) => {
+export const Route = (props: {
+  path?: string;
+  element: JSX.Element;
+  children?: React.ReactNode;
+}) => {
   return props.element;
 };

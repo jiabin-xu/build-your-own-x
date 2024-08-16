@@ -34,7 +34,6 @@ export function getUrlBasedHistory(
 
   function notify(event?: PopStateEvent) {
     if (listener) {
-      console.log("event :>> ", event);
       listener({ action: "POP", location: history.location, delta: 0 });
     }
   }
@@ -45,7 +44,6 @@ export function getUrlBasedHistory(
       window.addEventListener("popstate", notify);
 
       return () => {
-        console.log("cancel :>> ");
         listener = null;
         window.removeEventListener("popstate", notify);
       };

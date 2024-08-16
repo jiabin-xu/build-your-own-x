@@ -6,7 +6,9 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/article/:id" element={<Article />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/about" element={<About />}>
+          <Route path="/:name" element={<People />} />
+        </Route>
         <Route path="/contact" element={<Contact />} />
         <Route element={<NotFound />} />
       </Routes>
@@ -21,7 +23,7 @@ function Home() {
       <h1>Welcome to the Home page!</h1>
       <ol>
         <li>
-          <button onClick={() => navigate("about")}>About</button>
+          <button onClick={() => navigate("about/jim")}>About</button>
         </li>
         <li>
           <button onClick={() => navigate("contact")}>Contact</button>
@@ -39,6 +41,10 @@ function Home() {
 function About() {
   const navigate = useNavigate();
   return <h1 onClick={() => navigate(-1)}>About Us</h1>;
+}
+
+function People() {
+  return <h1>People</h1>;
 }
 
 function Contact() {
