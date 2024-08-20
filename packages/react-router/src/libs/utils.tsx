@@ -115,13 +115,11 @@ export function matchRoutes(
   basename = "/"
 ) {
   const matchedRoute = [];
-  console.log("routes :>> ", routes);
-  console.log("location.pathname :>> ", location.pathname);
   const segments = parsePath(location.pathname);
   if (segments.length === 0) {
     segments.push("");
   }
-  console.log("segments :>> ", segments);
+
   let index = 0;
   while (index < segments.length) {
     const pathname = "/" + segments.slice(0, index + 1).join("/");
@@ -133,6 +131,5 @@ export function matchRoutes(
     }
     index++;
   }
-  console.log("matchedRoute :>> ", matchedRoute);
   return matchedRoute;
 }
