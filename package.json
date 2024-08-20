@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:router": "pnpm -r --filter=react-router run dev"
+    "start:router": "pnpm -r --filter=react-router run dev",
+    "start:axios": "pnpm -r --filter=axios run dev"
   },
   "keywords": [],
   "author": "",
