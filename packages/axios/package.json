@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@koa/cors": "^5.0.0",
+    "koa": "^2.15.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },

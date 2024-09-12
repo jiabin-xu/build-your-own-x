@@ -1,10 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
+import { axios } from "./libs";
+
+axios.interceptors.request.use(
+  function (config) {
+    console.log("config :>> ", config);
+    // Do something before request is sent
+    return config;
+  },
+  function (error) {
+    console.log("error :>> ", error);
+    // Do something with request error
+    return Promise.reject(error);
+  }
+);
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    console.log("useEffect");
+    axios("http://localhost:3001/")
+      .then((res) => {
+        console.log("res :>> ", res);
+      })
+      .catch((err) => {
+        console.log("err :>> ", err);
+      });
+  }, []);
 
   return (
     <>
@@ -29,7 +53,7 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
