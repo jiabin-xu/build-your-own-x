@@ -6,6 +6,7 @@ import {
   useParams,
   Outlet,
 } from "./libs";
+import ResizeObservable from "./Resize";
 
 export default function App() {
   return (
@@ -26,7 +27,7 @@ export default function App() {
 function Home() {
   const navigate = useNavigate();
   return (
-    <>
+    <ResizeObservable onResize={console.log}>
       <h1>Welcome to the Home page!</h1>
       <ol>
         <li>
@@ -41,7 +42,7 @@ function Home() {
           </button>
         </li>
       </ol>
-    </>
+    </ResizeObservable>
   );
 }
 
