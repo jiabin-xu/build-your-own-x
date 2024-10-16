@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:router": "pnpm -r --filter=react-router run dev",
-    "start:axios": "pnpm -r --filter=axios run dev"
+    "start:axios": "pnpm -r --filter=axios run dev",
+    "client": "pnpm -r --filter=web-client run dev",
+    "server": "pnpm -r --filter=web-server start:dev"
   },
   "keywords": [],
   "author": "",

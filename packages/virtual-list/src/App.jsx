@@ -3,30 +3,40 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 // import './App.css'
 import { VirtualList } from './libs'
+import { FixedList as List } from './libs/FixedList';
+import { InfiniteList } from './libs/InfiniteList';
+
+const Row = ({ index, style }) => (
+  <div key={index} style={style}>Row {index}</div>
+);
 
 function App() {
-  const [data, setData] = useState(Array(20).fill().map((_, index) => ({ id: index })))
-  return (
-    <VirtualList
-      data={data}
-      itemRender={({ id }) => {
-        return <p style={{ height: '40px', color: 'black', textAlign: 'center' }} key={id}>{id}</p>
-      }}
-      itemHeight={40}
-      height={600}
-      loadMore={() => {
-        console.log('loadMore')
-        let len = data.length
-        let tempData = []
-        for (let i = len; i < len + 10; i++) {
-          tempData.push({ id: i })
-        }
-        setTimeout(() => {
-          setData(() => [...data, ...tempData])
-        }, 500);
 
-      }}
-    />
+  const [count, setCount] = useState(20)
+  return (
+    <div>
+      <List
+        height={150}
+        itemCount={1000}
+        itemSize={35}
+        width={300}
+      >
+        {Row}
+      </List>
+      <p>Infinite List </p>
+      <InfiniteList
+        height={150}
+        itemCount={count}
+        itemSize={35}
+        width={300}
+        loadMore={() => {
+          setTimeout(() => {
+            setCount(prev => prev + 20)
+          }, 500);
+        }}>
+        {Row}
+      </InfiniteList>
+    </div>
   )
 }
 
