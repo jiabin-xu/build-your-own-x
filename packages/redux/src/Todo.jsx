@@ -1,7 +1,7 @@
 // /Users/jiabin/Desktop/workspace/build-your-own-x/packages/redux/src/Todo.jsx
 
-import { useEffect, useState } from 'react';
-import { createStore } from './libs';
+import { useEffect, useMemo, useState } from 'react';
+import { bindActionCreators, combineReducers, createStore } from './libs';
 
 
 // Actions
@@ -19,34 +19,36 @@ const removeTodo = (index) => ({
 });
 
 // Reducer
-const initialState = {
-  todos: [],
-};
+const initialState = []
 
 const todoReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TODO:
-      return {
-        ...state,
-        todos: [...state.todos, action.payload],
-      };
+      return [...state, action.payload];
     case REMOVE_TODO:
-      return {
-        ...state,
-        todos: state.todos.filter((_, i) => i !== action.payload),
-      };
+      return state.filter((_, i) => i !== action.payload)
     default:
       return state;
   }
 };
 
+const rootReducer = combineReducers({
+  todos: todoReducer,
+  others: todoReducer
+})
 // Store
-const store = createStore(todoReducer, { todos: [] });
+const store = createStore(rootReducer, { todos: [] });
 
 // Components
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
   const dispatch = store.dispatch
+
+  const boundActionCreators = useMemo(() => bindActionCreators({
+    addTodo,
+    removeTodo
+  }, dispatch), [dispatch])
+
   useEffect(() => {
     const unSubscribe = store.subscribe((state) => {
       console.log('state :>> ', state);
@@ -59,7 +61,7 @@ const TodoList = () => {
 
   const handleAddTodo = () => {
     if (input.trim()) {
-      dispatch(addTodo(input));
+      boundActionCreators.addTodo(input)
       setInput('');
     }
   };
@@ -76,7 +78,7 @@ const TodoList = () => {
       <ul>
         {todos.map((todo, index) => (
           <li key={index}>
-            {todo} <button onClick={() => dispatch(removeTodo(index))}>Remove</button>
+            {todo} <button onClick={() => boundActionCreators.removeTodo(index)}>Remove</button>
           </li>
         ))}
       </ul>

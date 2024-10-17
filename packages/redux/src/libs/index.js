@@ -29,3 +29,22 @@ export function createStore(reducer, initState) {
 }
 
 
+export function combineReducers(reducerObj) {
+  return (state, action) => {
+    Object.entries(reducerObj).forEach(([key, reducer]) => {
+      state = {
+        ...state,
+        [key]: reducer(state[key], action)
+      }
+    })
+    return state
+  }
+}
+
+export function bindActionCreators(creatorObj, dispatch) {
+  for (let key in creatorObj) {
+    let creator = creatorObj[key]
+    creatorObj[key] = (args) => dispatch(creator(args))
+  }
+  return creatorObj
+}
